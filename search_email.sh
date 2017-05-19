@@ -21,9 +21,18 @@ OPERATION="$(grep -m 1 ':' new_mail.txt | sed 's/^.*: //' | tr -d "\n")"
 if [[ $OPERATION == /* ]]; then
 	echo $OPERATION > operation.txt
 
+# If user used a tilda to represent their home directory, then we will replace
+# the tilda with their home directory.
+elif [[ $OPERATION == ~* ]]; then
+	TILDA_FIX="${OPERATION/"~"/$HOME}"
+	echo $TILDA_FIX > operation.txt
+
+# If the user wanted to enter a bash command.
 else
+	
+	OPERATION_FIX=${OPERATION/"~"/$HOME}
 	# Place the operation into a folder named operation.txt
-	$OPERATION > operation.txt
+	$OPERATION_FIX > operation.txt
 
 	# If the command that was entered was not a valid command.
 	if [[ $? -eq 127 ]]; then
