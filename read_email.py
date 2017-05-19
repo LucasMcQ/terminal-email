@@ -17,9 +17,9 @@ import time
 import imaplib
 import email
 
-VERIFIED_EMAIL = "INSERT THE NAME ASSOCIATED WITH EMAIL ADDRESS <INSERT EMAIL ADDRESS THAT YOU WANT TO RECIVE TO>"	# ex: John Doe <johnDoe3425@gmail.com>
-FROM_EMAIL     = "INSERT EMAIL THAT WILL SEND YOU OUTPUT HERE"		# CHANGE THIS
-FROM_PWD       = "PASSWORD OF EMAIL THAT WILL SEND YOU OUTPUT"		# CHANGE THIS 
+VERIFIED_EMAIL = "RECIVING EMAIL ADDRESS"
+FROM_EMAIL     = "SENDING EMAIL ADDRESS"
+FROM_PWD       = "SENDING EMAIL PASSWORD"
 SMTP_SERVER    = "imap.gmail.com"
 SMTP_PORT      = 993
 
@@ -54,9 +54,25 @@ def read_email_from_gmail():
 					email_subject = msg['subject']
 					email_from = msg['from']
 
+					# msg['from'] stores the email address
+					# in the format: name <email@domian.com>
+					# this following code will extract the
+					# email address and store it in the var
+					# full_email and then compare it to the
+					# verified email address.
+
+					full_email = ""		# this will store the parsed email
+
+					i = email_from.find('<') + 1 
+
+					while email_from[i] != '>' :
+						full_email += email_from[i]
+						i = i + 1
+
+
 					# This is to prevent other email addresses
 					# from getting information on your computer...
-					if email_from == VERIFIED_EMAIL:
+					if full_email == VERIFIED_EMAIL:
 						print 'Operation : ' + email_subject
 
 	except Exception, e:
