@@ -18,8 +18,19 @@ python read_email.py > new_mail.txt
 # Get the operation that we are interested in.
 OPERATION="$(grep -m 1 ':' new_mail.txt | sed 's/^.*: //' | tr -d "\n")"
 
-# Place the operation into a folder named operation.txt
-$OPERATION > operation.txt
+if [[ $OPERATION == /* ]]; then
+	echo $OPERATION > operation.txt
+
+else
+	# Place the operation into a folder named operation.txt
+	$OPERATION > operation.txt
+
+	# If the command that was entered was not a valid command.
+	if [[ $? -eq 127 ]]; then
+		echo "INVALID COMMAND" > operation.txt
+	fi
+
+fi
 
 # Create file if there was no file present (startup).
 touch old_mail.txt
@@ -29,7 +40,7 @@ touch old_mail.txt
 diff new_mail.txt old_mail.txt > /dev/null 2>&1
 
 # If there was a new email, then send the email.
-if [ $? -eq 1 ]; then
+if [[ $? -eq 1 ]]; then
 	# Send the email with the output of the command, or the file that the
 	# email sender wanted to recive.
 	python send_email.py
