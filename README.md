@@ -41,11 +41,6 @@ Subject: ls -al /home/user/mydirectory
 This will send the output of the UNIX command to your verified email.
 
 
-# NOTE:
-Do not use the '~' character to represent your home directory. You must type
-'/home/your-username-here'  instead.
-
-
 # DIRECTIONS TO CONSTANTLY SEARCH FOR EMAIL:
 If you want to have this script constantly running, you can use crontab to do so.
 
