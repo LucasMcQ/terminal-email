@@ -15,6 +15,7 @@ files.
 
 # To run:
 chmod +x search_email.sh
+
 ./search_email.sh
 
 
