@@ -46,11 +46,12 @@ This will send the output of the UNIX command to your verified email.
 If you want to have this script constantly running, you can use crontab to do so.
 
 In a terminal type:
+
 crontab -e
 
 This will open up a text editor. Then place this line into the file:
 
-*/1 * * * *  cd home/your-username/path-to-directory-with-files && ./search_email.sh
+*/1 * * * *  cd $HOME/path-to-directory-with-files && ./search_email.sh
 
 Save and exit.
 This will run the script every minute.
