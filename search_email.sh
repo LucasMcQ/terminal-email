@@ -15,6 +15,19 @@
 # new_mail.txt.
 python read_email.py > new_mail.txt
 
+
+# Create file if there was no file present (startup).
+touch old_mail.txt
+
+# Check to see if there is new mail.
+diff new_mail.txt old_mail.txt > /dev/null 2>&1
+
+# If there was no new mail then we will terminate the script.
+if [[ $? -eq 0 ]]; then
+	exit 0
+fi
+
+
 # Get the operation that we are interested in.
 OPERATION="$(grep -m 1 ':' new_mail.txt | sed 's/^.*: //' | tr -d "\n")"
 
@@ -41,8 +54,6 @@ else
 
 fi
 
-# Create file if there was no file present (startup).
-touch old_mail.txt
 
 # compare the new mail to old mail to see if there was a new message, and throw
 # away any output that is produced.
