@@ -24,6 +24,7 @@ diff new_mail.txt old_mail.txt > /dev/null 2>&1
 
 # If there was no new mail then we will terminate the script.
 if [[ $? -eq 0 ]]; then
+	cp new_mail.txt old_mail.txt
 	exit 0
 fi
 
